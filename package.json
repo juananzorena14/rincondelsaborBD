@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch index"
+    "dev": "node --watch index",
+    "start": "node index.js"
   },
   "engines": {
-    "node": ">=18.18.0."
+    "node": ">= 0.6"
   },
-  
+
   "author": "",
   "license": "ISC",
   "dependencies": {
