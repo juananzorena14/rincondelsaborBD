@@ -15,6 +15,11 @@ const CategoriaSchema = Schema({
     ref: "Usuario",
     required: true,
   },
+  imagen: {
+    type: String
+  }
+  
+
 });
 
 module.exports = model("Categoria", CategoriaSchema);
