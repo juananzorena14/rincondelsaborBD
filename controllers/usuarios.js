@@ -2,39 +2,29 @@ const { request, response } = require("express");
 const Usuario = require("../models/usuario");
 const bcrypt = require("bcryptjs");
 
+//GET
 const usuariosGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
 
-  // const usuarios = await Usuario.find().limit(limite).skip(desde);
-  // const total = await Usuario.countDocuments();
-
-  //promise.all()
-
+  //mostrar usuarios con state: true
   const [total, usuarios] = await Promise.all([
     Usuario.countDocuments({ state: true }),
     Usuario.find({ state: true }).limit(limite).skip(desde),
   ]);
 
-  //request , response
   res.status(200).json({
     total,
     usuarios,
   });
 };
 
+//POST
 const usuarioPost = async (req = request, res) => {
   const { name, email, password, role } = req.body;
 
-  const usuario = new Usuario({ name, email, password, role });
+  const usuario = new Usuario({ name, email, password, role, adress, state });
 
-  // //validar si el email existe
-  // const existeEmail = await Usuario.findOne({ email });
-  // if (existeEmail) {
-  //   return res.status(400).json({
-  //     msg: `El correo ${email} ya está registrado`,
-  //   });
-  // }
-
+  //encriptar contraseña
   const salt = bcrypt.genSaltSync();
   usuario.password = bcrypt.hashSync(password, salt);
 
@@ -42,10 +32,11 @@ const usuarioPost = async (req = request, res) => {
 
   res.status(201).json({
     message: "Usuario creado",
-    usuario, //toJSON()
+    usuario, 
   });
 };
 
+//PUT
 const usuarioPut = async (req = request, res) => {
   const { id } = req.params;
 
@@ -62,20 +53,12 @@ const usuarioPut = async (req = request, res) => {
   });
 };
 
+//DELETE
 const usuarioDelete = async (req, res) => {
-  const { id } = req.params;
-
-  //borrado físico
-  // const usuarioBorrado = await Usuario.findByIdAndDelete(id);
-
-  //Inactivar un documento
+  const {id} = req.params;
 
   const usuarioBorrado = await Usuario.findByIdAndUpdate(
-    id,
-    {
-      state: false,
-    },
-    { new: true }
+    id,{state: false},{new: true}
   );
 
   res.status(200).json({

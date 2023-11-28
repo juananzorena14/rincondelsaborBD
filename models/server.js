@@ -1,3 +1,4 @@
+//IMPORT
 const express = require("express");
 const cors = require("cors");
 const { dbConnection } = require("../database/config");
@@ -6,6 +7,8 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
+    //Rutas
     this.authPath = "/api/auth";
     this.usuariosPath = "/api/usuarios";
     this.categoriasPath = "/api/categorias";
@@ -39,7 +42,6 @@ class Server {
   routes() {
     this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.usuariosPath, require("../routes/usuarios"));
-    //definir acceso a rutas de categorias
     this.app.use(this.categoriasPath, require("../routes/categorias"));
     this.app.use(this.productosPath, require("../routes/productos"));
 

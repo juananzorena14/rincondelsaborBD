@@ -1,8 +1,10 @@
+//IMPORT
 const Role = require("../models/role");
 const Usuario = require("../models/usuario");
 const Categoria = require("../models/categoria");
 const Producto = require("../models/producto");
 
+//Validar role
 const esRoleValido = async (role = "USER_ROLE") => {
   const existeRole = await Role.findOne({ role });
   if (!existeRole) {

@@ -23,9 +23,6 @@ const UsuarioSchema = Schema({
     type: String,
     required: [true, "Necesitas una dirección para el envio"],
   },
-  img: {
-    type: String,
-  },
   state: {
     type: Boolean,
     default: true,
